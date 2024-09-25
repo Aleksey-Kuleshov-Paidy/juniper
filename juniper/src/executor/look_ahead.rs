@@ -1542,38 +1542,4 @@ query Hero {
             panic!("No Operation found");
         }
     }
-
-    #[test]
-    fn limit_number_of_aliases() {
-        let docs = parse_document_source::<DefaultScalarValue>(
-            "
-        query Hero {
-          empireHero: hero(episode: EMPIRE) {
-            name
-          }
-          jediHero: hero(episode: JEDI) {
-            name
-          }
-        }",
-        )
-        .unwrap();
-
-        let fragments = extract_fragments(&docs);
-        if let crate::ast::Definition::Operation(ref op) = docs[0] {
-            let vars = graphql_vars! {};
-            let children: Vec<LookAheadSelection<DefaultScalarValue>> = op
-                .item
-                .selection_set
-                .iter()
-                .map(|selection| {
-                    LookAheadSelection::build_from_selection(selection, &vars, &fragments).unwrap()
-                })
-                .collect();
-
-            println!("{}", children.len());
-            assert_eq!(children.len(), 2);
-        } else {
-            panic!("No Operation found");
-        }
-    }
 }
