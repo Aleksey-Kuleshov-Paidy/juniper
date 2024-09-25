@@ -7,7 +7,7 @@ use rocket::{response::content, Rocket, State};
 type Schema = RootNode<'static, Query, EmptyMutation<Database>, EmptySubscription<Database>>;
 
 #[rocket::get("/")]
-fn graphiql() -> content::Html<String> {
+fn graphiql() -> content::RawHtml<String> {
     juniper_rocket::graphiql_source("/graphql", None)
 }
 
