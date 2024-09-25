@@ -66,7 +66,8 @@ where
         .with(self::unique_operation_names::factory())
         .with(self::unique_variable_names::factory())
         .with(self::variables_are_input_types::factory())
-        .with(self::variables_in_allowed_position::factory());
+        .with(self::variables_in_allowed_position::factory())
+        .with(self::limit_allowed_alias_count::factory());
     visit(&mut stage1, ctx, doc);
     if ctx.has_errors() {
         return;
