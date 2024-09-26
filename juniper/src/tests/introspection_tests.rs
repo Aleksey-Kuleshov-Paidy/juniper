@@ -11,6 +11,7 @@ use crate::{
 use super::schema_introspection::*;
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn test_introspection_query_type_name() {
     let doc = r#"
         query IntrospectionQueryTypeQuery {
@@ -44,6 +45,7 @@ async fn test_introspection_query_type_name() {
 }
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn test_introspection_type_name() {
     let doc = r#"
         query IntrospectionQueryTypeQuery {
@@ -72,6 +74,7 @@ async fn test_introspection_type_name() {
 }
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn test_introspection_specific_object_type_name_and_kind() {
     let doc = r#"
         query IntrospectionDroidKindQuery {
@@ -103,6 +106,7 @@ async fn test_introspection_specific_object_type_name_and_kind() {
 }
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn test_introspection_specific_interface_type_name_and_kind() {
     let doc = r#"
         query IntrospectionDroidKindQuery {
@@ -134,6 +138,7 @@ async fn test_introspection_specific_interface_type_name_and_kind() {
 }
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn test_introspection_documentation() {
     let doc = r#"
         query IntrospectionDroidDescriptionQuery {
@@ -165,6 +170,7 @@ async fn test_introspection_documentation() {
 }
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn test_introspection_directives() {
     let q = r#"
         query IntrospectionQuery {
@@ -230,6 +236,7 @@ async fn test_introspection_directives() {
 }
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn test_introspection_possible_types() {
     let doc = r#"
         query IntrospectionDroidDescriptionQuery {
@@ -279,6 +286,7 @@ async fn test_introspection_possible_types() {
 }
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn test_builtin_introspection_query() {
     let database = Database::new();
     let schema = RootNode::new(
@@ -293,6 +301,7 @@ async fn test_builtin_introspection_query() {
 }
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn test_builtin_introspection_query_without_descriptions() {
     let database = Database::new();
     let schema = RootNode::new(

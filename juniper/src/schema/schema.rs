@@ -7,6 +7,7 @@ use crate::{
         base::{Arguments, GraphQLType, GraphQLValue, TypeKind},
     },
     value::{ScalarValue, Value},
+    FieldError,
 };
 
 use crate::schema::{
@@ -64,6 +65,9 @@ where
         executor: &Executor<Self::Context, S>,
     ) -> ExecutionResult<S> {
         match field {
+            "__schema" | "__type" if cfg!(feature = "disable_introspection") => Err(
+                FieldError::new("Introspection queries are disabled", Value::null()),
+            ),
             "__schema" => executor
                 .replaced_context(&self.schema)
                 .resolve(&(), &self.schema),
@@ -119,6 +123,13 @@ where
     ) -> crate::BoxFuture<'b, ExecutionResult<S>> {
         use futures::future::ready;
         match field_name {
+            "__schema" | "__type" if cfg!(feature = "disable_introspection") => {
+                let v = Err(FieldError::new(
+                    "Introspection queries are disabled",
+                    Value::null(),
+                ));
+                Box::pin(ready(v))
+            }
             "__schema" | "__type" => {
                 let v = self.resolve_field(info, field_name, arguments, executor);
                 Box::pin(ready(v))

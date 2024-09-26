@@ -47,12 +47,24 @@ where
         let mut doc = Document::default();
 
         // Translate type defs.
-        let mut types = input
+        let mut types: Vec<_> = input
             .types
             .iter()
             .filter(|(_, meta)| !meta.is_builtin())
-            .map(|(_, meta)| GraphQLParserTranslator::translate_meta(meta))
-            .map(Definition::TypeDefinition)
+            .map(|(name, meta)| {
+                let external_type_definition = GraphQLParserTranslator::translate_meta(meta);
+                let definition = Definition::TypeDefinition(external_type_definition);
+                (name, definition)
+            })
+            .collect();
+
+        if cfg!(feature = "sort-schema-definitions") {
+            types.sort_by_key(|(name, _)| *name);
+        }
+
+        let mut types = types
+            .into_iter()
+            .map(|(_, definition)| definition)
             .collect();
         doc.definitions.append(&mut types);
 

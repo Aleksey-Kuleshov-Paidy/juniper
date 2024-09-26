@@ -82,6 +82,7 @@ async fn test_execution() {
 }
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn enum_introspection() {
     let doc = r#"
     {
@@ -177,6 +178,7 @@ async fn enum_introspection() {
 }
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn interface_introspection() {
     let doc = r#"
     {
@@ -298,6 +300,7 @@ async fn interface_introspection() {
 }
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn object_introspection() {
     let doc = r#"
     {
@@ -464,6 +467,7 @@ async fn object_introspection() {
 }
 
 #[tokio::test]
+#[cfg_attr(feature = "disable_introspection", ignore)]
 async fn scalar_introspection() {
     let doc = r#"
     {

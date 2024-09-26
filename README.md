@@ -1,3 +1,48 @@
+## About this fork
+
+This is a fork of Juniper v0.15.9.
+
+It restricts the resolving of `__schema` and `__type` fields via the added 
+`disable_introspection` feature.
+
+### Example
+
+#### Query
+
+```graphql
+{
+    __schema {
+        types {
+            name
+        }
+    }
+}
+```
+
+#### Response, with `disable_introspection` on
+
+```json
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Introspection queries are disabled",
+      "locations": [
+        {
+          "line": 1,
+          "column": 3
+        }
+      ],
+      "path": [
+        "__schema"
+      ]
+    }
+  ]
+}
+```
+
+---
+
 <img src="https://github.com/graphql-rust/juniper/raw/master/assets/logo/juniper-dark-word.png" alt="Juniper" width="500" />
 
 > GraphQL server library for Rust
