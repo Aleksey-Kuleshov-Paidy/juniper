@@ -6,6 +6,7 @@ mod known_argument_names;
 mod known_directives;
 mod known_fragment_names;
 mod known_type_names;
+mod limit_number_of_aliases;
 mod lone_anonymous_operation;
 mod no_fragment_cycles;
 mod no_undefined_variables;
@@ -65,7 +66,8 @@ where
         .with(self::unique_operation_names::factory())
         .with(self::unique_variable_names::factory())
         .with(self::variables_are_input_types::factory())
-        .with(self::variables_in_allowed_position::factory());
+        .with(self::variables_in_allowed_position::factory())
+        .with(self::limit_number_of_aliases::factory());
     visit(&mut stage1, ctx, doc);
     if ctx.has_errors() {
         return;
