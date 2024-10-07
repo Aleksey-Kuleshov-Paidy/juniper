@@ -13,7 +13,7 @@ pub struct Aliases {
 pub fn factory<'a>() -> Aliases {
     Aliases {
         alias_count: 0,
-        max_allowed: 1,
+        max_allowed: 3,
     }
 }
 
@@ -94,19 +94,19 @@ mod tests {
         query MyQuery {
             myField1: my_field,
             myField2: my_field,
-            myField3: my_field
+            myField3: my_field,
+            myField4: my_field,
+            myField5: my_field
         }
         "#,
             &[
                 RuleError::new(
-                    &error_message("myField2"),
-                    &[
-                        SourcePosition::new(69, 3, 12), // includes whitespaces
-                    ],
+                    &error_message("myField4"),
+                    &[SourcePosition::new(133, 5, 12)],
                 ),
                 RuleError::new(
-                    &error_message("myField3"),
-                    &[SourcePosition::new(101, 4, 12)],
+                    &error_message("myField5"),
+                    &[SourcePosition::new(165, 6, 12)],
                 ),
             ],
         );
@@ -127,16 +127,22 @@ mod tests {
             republicHero: hero(episode: REPUBLIC) {
                 name
             }
+            republicH3ro: hero(episode: REPUBLIC) {
+                name
+            }
+            republicH4ro: hero(episode: REPUBLIC) {
+                name
+            }
           }
         "#,
             &[
                 RuleError::new(
-                    &error_message("jediHero"),
-                    &[SourcePosition::new(117, 5, 12)],
+                    &error_message("republicH3ro"),
+                    &[SourcePosition::new(268, 8, 12)],
                 ),
                 RuleError::new(
-                    &error_message("republicHero"),
-                    &[SourcePosition::new(194, 8, 12)],
+                    &error_message("republicH4ro"),
+                    &[SourcePosition::new(342, 8, 12)],
                 ),
             ],
         );
