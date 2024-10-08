@@ -84,7 +84,10 @@ mod tests {
             }
             "#,
         );
+    }
 
+    #[test]
+    fn multiple_alias_allowed() {
         expect_passes_rule::<_, _, DefaultScalarValue>(
             factory,
             r#"
