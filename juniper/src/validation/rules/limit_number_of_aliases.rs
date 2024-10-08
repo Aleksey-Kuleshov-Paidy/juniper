@@ -46,7 +46,7 @@ where
 }
 
 fn error_message(alias_name: &str) -> String {
-    format!("There can only be one alias, {} is not allowed", alias_name)
+    format!("Illegal number of aliases, {} is not allowed", alias_name)
 }
 
 #[cfg(test)]
@@ -81,6 +81,22 @@ mod tests {
                 token
                 applicantId
               }
+            }
+            "#,
+        );
+
+        expect_passes_rule::<_, _, DefaultScalarValue>(
+            factory,
+            r#"
+          query Hero {
+            empireHero: hero(episode: EMPIRE) {
+              name
+            }
+            jediHero: hero(episode: JEDI) {
+              name
+            }
+            republicHero: hero(episode: REPUBLIC) {
+                name
             }
             "#,
         );
